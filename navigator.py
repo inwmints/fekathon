@@ -6,16 +6,7 @@ import random
 from datetime import datetime, time as dt_time
 from telebot import types
 
-a=[103,104,105,106,107,108]
-b=[101,102]
-c=[109,110,111,113,115,116]
-d=[217,218,201,202]
-e=[203,204,205,206,207,208]
-f=[209,210,211,212,213,214,215,216]
-j=[301,302,311]
-k=[303,304,305,306,307]
-g=[403,404,405]
-h=[406,407]
+
 
 # Список для хранения ID чатов для рассылки
 subscribed_chats = set()
@@ -436,6 +427,7 @@ def process_cabinet_number(message):
             
     except ValueError:
         bot.send_message(message.chat.id, 'Введите число')
+
 
 
 bot.polling(none_stop=True)
