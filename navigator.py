@@ -11,7 +11,7 @@ from telebot import types
 # Список для хранения ID чатов для рассылки
 subscribed_chats = set()
 
-bot = telebot.TeleBot('8356625468:AAE11_QhXsQ2rwwzGbnSUdwToPJ8W-hUTpo')
+bot = telebot.TeleBot('')
 
 # Обновленные сообщения о запрете курения
 smoking_messages = [
@@ -431,3 +431,4 @@ def process_cabinet_number(message):
 
 
 bot.polling(none_stop=True)
+
