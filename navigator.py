@@ -312,7 +312,7 @@ def process_cabinet_number(message):
            # Определяем этаж по номеру кабинета
         floor = namber // 100  # 101 -> 1, 201 -> 2, etc.
         
-        # Словарь с file_id для каждого этажа (ЗАМЕНИТЕ НА ВАШИ РЕАЛЬНЫЕ file_id)
+        # Словарь с file_id для каждого этажа
         floor_photos = {
             1: 'AgACAgIAAxkBAAIBlmkKPlMoHiMrAwi-60HagqkVkrV4AAK2Emsbj0xQSIkAARjZS1t3wAEAAwIAA3kAAzYE',  # Замените на реальный file_id
             2: 'AgACAgIAAxkBAAIBmWkKPot_aFhI39mu2YvrCJVpdbXLAAK6Emsbj0xQSIRFBR2LQPj9AQADAgADeQADNgQ',  # Замените на реальный file_id
@@ -431,4 +431,5 @@ def process_cabinet_number(message):
 
 
 bot.polling(none_stop=True)
+
 
