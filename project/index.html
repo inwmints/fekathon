@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Схема здания</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Навигация по зданию</h1>
+        
+        <div class="controls">
+            <div class="search-section">
+                <label for="room-number">Номер кабинета:</label>
+                <input type="text" id="room-number" placeholder="Например: 101">
+                <button id="search-btn">Найти</button>
+            </div>
+            
+            <div class="floor-selector">
+                <label>Этаж:</label>
+                <button class="floor-btn active" data-floor="1">1</button>
+                <button class="floor-btn" data-floor="2">2</button>
+                <button class="floor-btn" data-floor="3">3</button>
+                <button class="floor-btn" data-floor="4">4</button>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div id="floor-plan-display">
+                <div id="no-image-message">
+                    Загрузка схем этажей...
+                </div>
+                <canvas id="floor-canvas"></canvas>
+            </div>
+        </div>
+        
+        <div id="room-info" class="room-info hidden">
+            <h3>Информация о кабинете</h3>
+            <p id="room-details"></p>
+        </div>
+    </div>
+
+
+    <script src="structure.js" charset="UTF-8"></script>
+    <script src="script.js" charset="UTF-8"></script>
+</body>
+</html>
