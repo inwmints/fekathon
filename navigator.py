@@ -146,6 +146,9 @@ def start(message):
     markup.row(btn3,btn4)
     btn5 = types.KeyboardButton('Приёмная и каб. зам. директоров')
     markup.row(btn5)
+    btn6 = types.KeyboardButton('🏀 Спортзал')
+    btn7 = types.KeyboardButton('🎭 Актовый зал')
+    markup.row(btn6, btn7)
     
     welcome_msg = "Добро пожаловать в навигатор по ФЭК РГЭУ(РИНХ)!!!\n\n"
     welcome_msg += "🚭 Курение ЗАПРЕЩЕНО везде: в колледже, рядом с колледжем и возле прокуратуры\n"
@@ -226,7 +229,104 @@ def on_click(message):
     
     elif message.text == 'Приёмная и каб. зам. директоров':
         bot.send_message(message.chat.id, 'Приёмная: 1 этаж, правое крыло, справа 6 дверь\nКабинеты заместителей директоров: 1 этаж, правое крыло, справа с 1 по 5')
+
+    elif message.text == '🏀 Спортзал':
+        show_gym_info(message)
     
+    elif message.text == '🎭 Актовый зал':
+        show_auditorium_info(message)
+
+def show_gym_info(message):
+    """Показывает информацию о спортзале"""
+    gym_text = """
+🏀 СПОРТЗАЛ ФЭК
+
+📍 Расположение: 
+• 4 этаж, левое крыло 
+• слева 3 дверь
+
+        """
+    
+    # Создаем кнопки для раздевалок
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    
+    btn_male_locker = types.InlineKeyboardButton("👔 Мужская раздевалка", callback_data="locker_male")
+    btn_female_locker = types.InlineKeyboardButton("👗 Женская раздевалка", callback_data="locker_female")
+    btn_back = types.InlineKeyboardButton("🔙 Назад", callback_data="back_to_main")
+    
+    markup.add(btn_male_locker, btn_female_locker, btn_back)
+    
+    bot.send_message(message.chat.id, gym_text, reply_markup=markup)
+
+def show_auditorium_info(message):
+    """Показывает информацию об актовом зале"""
+    auditorium_text = """
+🎭 АКТОВЫЙ ЗАЛ ФЭК
+
+📍 Расположение:
+• 3 этаж, центр
+• справа 1 дверь
+• балкон:
+• 4 этаж, центр
+• справа 1 дверь
+
+        """
+    
+    markup = types.InlineKeyboardMarkup()
+    btn_back = types.InlineKeyboardButton("🔙 Назад", callback_data="back_to_main")
+    markup.add(btn_back)
+    
+    bot.send_message(message.chat.id, auditorium_text, reply_markup=markup)
+
+# Обработчик для инлайн-кнопок раздевалок
+@bot.callback_query_handler(func=lambda call: call.data.startswith('locker_'))
+def handle_locker_buttons(call):
+    if call.data == 'locker_male':
+        response = """
+👔 МУЖСКАЯ РАЗДЕВАЛКА
+
+📍 Расположение:
+• Рядом со спортзалом
+• 4 этаж, левое крыло
+• справа 4 дверь
+
+        """
+        
+    elif call.data == 'locker_female':
+        response = """
+👗 ЖЕНСКАЯ РАЗДЕВАЛКА
+
+📍 Расположение:
+• Рядом со спортзалом  
+• 4 этаж, левое крыло
+• справа 3 дверь
+
+        """
+    
+    # Создаем кнопку назад к спортзалу
+    markup = types.InlineKeyboardMarkup()
+    btn_back_to_gym = types.InlineKeyboardButton("🔙 К спортзалу", callback_data="back_to_gym")
+    markup.add(btn_back_to_gym)
+    
+    bot.edit_message_text(
+        chat_id=call.message.chat.id,
+        message_id=call.message.message_id,
+        text=response,
+        reply_markup=markup
+    )
+    
+    bot.answer_callback_query(call.id)
+
+# Обработчик для кнопок назад
+@bot.callback_query_handler(func=lambda call: call.data.startswith('back_'))
+def handle_back_buttons(call):
+    if call.data == 'back_to_gym':
+        show_gym_info(call.message)
+    elif call.data == 'back_to_main':
+        # Возвращаем к главному меню
+        bot.delete_message(call.message.chat.id, call.message.message_id)
+    
+    bot.answer_callback_query(call.id)
 
 def show_nearby_places(message):
     """Показывает места рядом с колледжем"""
@@ -431,5 +531,6 @@ def process_cabinet_number(message):
 
 
 bot.polling(none_stop=True)
+
 
 
